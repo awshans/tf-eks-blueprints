@@ -60,14 +60,14 @@ module "eks_blueprints" {
     }
   }
   
-  #platform_teams = {
-  #  admin = {
-  #    users = [
+  platform_teams = {
+    admin = {
+      users = [
         #data.aws_caller_identity.current.arn
-  #      var.users
-  #    ]
-  #  }
-  #}
+        var.users
+      ]
+    }
+  }
 
   tags = merge(
     var.tags,
@@ -110,8 +110,8 @@ module "kubernetes-addons" {
   argocd_applications = {
     workloads = {
       path                = "env/dev"
-      repo_url            = "https://github.com/awshans/app1.git"
-      ssh_key_secret_name = "github-ssh-key"  # Needed for private repos
+      repo_url            = "https://github.com/awshans/app1-pub.git"
+      #ssh_key_secret_name = "github-ssh-key"  # Needed for private repos
       add_on_application  = true              # Indicates the root add-on application.
       values              = {}
     }
