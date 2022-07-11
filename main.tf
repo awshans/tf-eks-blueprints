@@ -8,7 +8,6 @@ module "m_network" {
     tags              = local.tags
 }
 
-
 module "m_eks" {
     source            = "./modules/eks"
     name              = local.name
