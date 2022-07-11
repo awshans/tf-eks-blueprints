@@ -3,7 +3,7 @@ locals {
   name            = basename(path.cwd)
   region          = data.aws_region.current.name
   cluster_version = "1.21"
-  service_name    = "App1"
+  service_name    = "app1"
   owner           = "team1"
 
   vpc_cidr      = "10.0.0.0/16"

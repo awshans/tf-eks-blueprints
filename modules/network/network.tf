@@ -38,3 +38,54 @@ module "vpc" {
   )
   
 }
+
+resource "aws_security_group" "database" {
+  name        = "database_security_group"
+  description = "Allow postgresql traffic"
+  vpc_id      = module.vpc.vpc_id
+
+  ingress {
+    description      = "PostgreSQL"
+    from_port        = 5432
+    to_port          = 5432
+    protocol         = "tcp"
+    #cidr_blocks      = [var.vpc_cidr]
+    security_groups = [aws_security_group.container.id]
+  }
+
+  egress {
+    from_port        = 0
+    to_port          = 0
+    protocol         = "-1"
+    cidr_blocks      = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "PostgreSQL"
+  }
+}
+
+resource "aws_security_group" "container" {
+  name        = "container_security_group"
+  description = "Allow postgresql traffic"
+  vpc_id      = module.vpc.vpc_id
+
+  ingress {
+    description      = "to container"
+    from_port        = 80
+    to_port          = 80
+    protocol         = "tcp"
+    cidr_blocks      = [var.vpc_cidr]
+  }
+
+  egress {
+    from_port        = 0
+    to_port          = 0
+    protocol         = "-1"
+    cidr_blocks      = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "container security_groups"
+  }
+}
